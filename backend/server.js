@@ -18,13 +18,25 @@ app.get("/menu/:menuItem", function(request,response) {
  {id: 4, dish: "Penne with Vodka Sauce", price: 18}
 ];
 const menuItemParam = request.params.menuItem.toLowerCase();
+const item = menu.find(entry => entry.dish.toLowerCase().includes(menuItemParam));
 
-const item = menu.find(entry => entry.dish.toLowerCase().include(menuItemParam));
 if (item){
     response.json(item);
 }else{
     response.status(404).send("Menu item not found.");
 }
+});
+
+app.post("/reservations", function(request,response){
+    const {name, date, time} = request.body;
+    const reservations = {name, date, time};
+    if(reservations){
+    response.status(201).json({
+    message: "Reservation confirmed!",
+    reservation});
+       }else{
+     response.status(501).send("Route exists but is not implemented yet");
+    }
 });
 
 //Tell the express app that you want it to listen on port 8080 of your computer
